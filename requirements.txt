@@ -8,3 +8,4 @@ pypdf
 python-dotenv
 openai
 langchain-text-splitters
+protobuf==3.20.3
