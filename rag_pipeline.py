@@ -8,6 +8,8 @@ from openai import OpenAI
 
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
+from langchain_community.document_loaders import PyPDFLoader
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 from utils.prompts import SYSTEM_PROMPT
 
@@ -41,12 +43,34 @@ embedding_model = HuggingFaceEmbeddings(
 
 
 # -----------------------------
-# Load Persistent ChromaDB
+# Create / Load ChromaDB
 # -----------------------------
-vectorstore = Chroma(
-    persist_directory="chroma_db",
-    embedding_function=embedding_model
-)
+DB_PATH = "chroma_db"
+
+if not os.path.exists(DB_PATH):
+
+    loader = PyPDFLoader("data/upwork_api_docs.pdf")
+    documents = loader.load()
+
+    splitter = RecursiveCharacterTextSplitter(
+        chunk_size=500,
+        chunk_overlap=50
+    )
+
+    chunks = splitter.split_documents(documents)
+
+    vectorstore = Chroma.from_documents(
+        documents=chunks,
+        embedding=embedding_model,
+        persist_directory=DB_PATH
+    )
+
+else:
+
+    vectorstore = Chroma(
+        persist_directory=DB_PATH,
+        embedding_function=embedding_model
+    )
 
 
 # -----------------------------
