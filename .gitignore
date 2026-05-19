@@ -31,3 +31,6 @@ build/
 
 # Secrets
 .env.local
+
+
+chroma_db/

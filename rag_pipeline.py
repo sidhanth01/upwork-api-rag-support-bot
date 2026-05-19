@@ -43,34 +43,23 @@ embedding_model = HuggingFaceEmbeddings(
 
 
 # -----------------------------
-# Create / Load ChromaDB
+# Create Fresh ChromaDB
 # -----------------------------
-DB_PATH = "chroma_db"
+loader = PyPDFLoader("data/upwork_api_docs.pdf")
+documents = loader.load()
 
-if not os.path.exists(DB_PATH):
+splitter = RecursiveCharacterTextSplitter(
+    chunk_size=500,
+    chunk_overlap=50
+)
 
-    loader = PyPDFLoader("data/upwork_api_docs.pdf")
-    documents = loader.load()
+chunks = splitter.split_documents(documents)
 
-    splitter = RecursiveCharacterTextSplitter(
-        chunk_size=500,
-        chunk_overlap=50
-    )
-
-    chunks = splitter.split_documents(documents)
-
-    vectorstore = Chroma.from_documents(
-        documents=chunks,
-        embedding=embedding_model,
-        persist_directory=DB_PATH
-    )
-
-else:
-
-    vectorstore = Chroma(
-        persist_directory=DB_PATH,
-        embedding_function=embedding_model
-    )
+vectorstore = Chroma.from_documents(
+    documents=chunks,
+    embedding=embedding_model,
+    persist_directory="chroma_db"
+)
 
 
 # -----------------------------
