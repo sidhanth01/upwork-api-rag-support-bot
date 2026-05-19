@@ -98,7 +98,7 @@ upwork-api-rag-support-bot/
 ## 1. Clone Repository
 
 ```bash
-git clone https://github.com/your-username/upwork-api-rag-support-bot.git
+git clone https://github.com/sidhanth01/upwork-api-rag-support-bot.git
 cd upwork-api-rag-support-bot
 ```
 
