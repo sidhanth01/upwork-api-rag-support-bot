@@ -17,9 +17,6 @@ __pycache__/
 # Streamlit
 .streamlit/
 
-# ChromaDB Persistent Storage
-chroma_db/
-
 # OS Files
 .DS_Store
 Thumbs.db
