@@ -102,13 +102,44 @@ def ask_question(user_query):
             0
         )
 
-    # -----------------------------
-    # Semantic Retrieval
-    # -----------------------------
-    retrieved_docs = vectorstore.similarity_search(
-        user_query,
-        k=5,
-    )
+# -----------------------------
+# Query Expansion
+# -----------------------------
+enhanced_query = user_query
+
+query_lower = user_query.lower()
+
+if "refresh token" in query_lower:
+    enhanced_query += " ttl expiration validity"
+
+if "access token" in query_lower:
+    enhanced_query += " ttl expiration validity"
+
+if "grant" in query_lower:
+    enhanced_query += " oauth supported grants authorization implicit client credentials"
+
+if "tenantid" in query_lower or "x-upwork-api-tenantid" in query_lower:
+    enhanced_query += " organization header tenant"
+
+if "service account" in query_lower:
+    enhanced_query += " permissions scopes enterprise"
+
+if "graphql error" in query_lower:
+    enhanced_query += " validationerror message locations extensions"
+
+if "subscription" in query_lower:
+    enhanced_query += " entity action id webhook"
+
+if "job posting" in query_lower:
+    enhanced_query += " marketplaceJobPosting jobPosting permissions"
+
+# -----------------------------
+# Semantic Retrieval
+# -----------------------------
+retrieved_docs = vectorstore.similarity_search(
+    enhanced_query,
+    k=5
+)
 
     # -----------------------------
     # Combine Retrieved Context
