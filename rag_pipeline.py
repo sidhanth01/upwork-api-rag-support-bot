@@ -107,7 +107,7 @@ def ask_question(user_query):
     # -----------------------------
     retrieved_docs = vectorstore.similarity_search(
         user_query,
-        k=3,
+        k=5,
     )
 
     # -----------------------------
