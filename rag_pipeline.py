@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from openai import OpenAI
 
 from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_community.vectorstores import Chroma
+from langchain_community.vectorstores import FAISS
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
@@ -43,7 +43,7 @@ embedding_model = HuggingFaceEmbeddings(
 
 
 # -----------------------------
-# Create Fresh ChromaDB
+# Create FAISS Vector Store
 # -----------------------------
 loader = PyPDFLoader("data/upwork_api_docs.pdf")
 documents = loader.load()
@@ -55,10 +55,9 @@ splitter = RecursiveCharacterTextSplitter(
 
 chunks = splitter.split_documents(documents)
 
-vectorstore = Chroma.from_documents(
+vectorstore = FAISS.from_documents(
     documents=chunks,
-    embedding=embedding_model,
-    persist_directory="chroma_db"
+    embedding=embedding_model
 )
 
 
