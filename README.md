@@ -1,10 +1,10 @@
-# 🤖 Upwork API RAG Support Bot
+# Upwork API RAG Support Bot
 
 Grounded RAG-based technical support assistant for answering Upwork API queries using LangChain, ChromaDB, Streamlit, and Llama 3.1.
 
 ---
 
-# 🚀 Overview
+# Overview
 
 This project is a production-style Retrieval-Augmented Generation (RAG) system built for answering technical questions related to the Upwork API documentation.
 
@@ -20,7 +20,7 @@ The system is designed with:
 
 ---
 
-# 🧠 Architecture
+# Architecture
 
 ```text
 User Query
@@ -40,22 +40,22 @@ Answer + Sources + Latency
 
 ---
 
-# ✨ Features
+# Features
 
-- 📄 PDF-based documentation ingestion
-- 🔍 Semantic search using vector embeddings
-- 🧠 Retrieval-Augmented Generation (RAG)
-- 🛡️ Prompt injection protection
-- 🚫 Hallucination guardrails
-- 📚 Source transparency
-- ⏱️ API latency tracking
-- 🎯 Deterministic grounded responses
-- 💾 Persistent ChromaDB vector storage
-- 🌐 Interactive Streamlit UI
+-  PDF-based documentation ingestion
+-  Semantic search using vector embeddings
+-  Retrieval-Augmented Generation (RAG)
+-  Prompt injection protection
+-  Hallucination guardrails
+-  Source transparency
+-  API latency tracking
+-  Deterministic grounded responses
+-  Persistent ChromaDB vector storage
+-  Interactive Streamlit UI
 
 ---
 
-# 🛠️ Tech Stack
+# Tech Stack
 
 | Component | Technology |
 |---|---|
@@ -70,7 +70,7 @@ Answer + Sources + Latency
 
 ---
 
-# 📂 Project Structure
+# Project Structure
 
 ```text
 upwork-api-rag-support-bot/
@@ -93,12 +93,12 @@ upwork-api-rag-support-bot/
 
 ---
 
-# ⚙️ Setup Instructions
+# Setup Instructions
 
 ## 1. Clone Repository
 
 ```bash
-git clone https://github.com/your-username/upwork-api-rag-support-bot.git
+git clone https://github.com/sidhanth01/upwork-api-rag-support-bot.git
 cd upwork-api-rag-support-bot
 ```
 
@@ -140,7 +140,7 @@ DEEPINFRA_API_KEY=your_api_key_here
 
 ---
 
-# 📥 Data Ingestion
+# Data Ingestion
 
 Run the ingestion pipeline to:
 - Load the PDF
@@ -154,7 +154,7 @@ python ingest.py
 
 ---
 
-# ▶️ Run Application
+# Run Application
 
 ```bash
 streamlit run app.py
@@ -162,7 +162,7 @@ streamlit run app.py
 
 ---
 
-# 🧪 Sample Questions
+# Sample Questions
 
 ## Question 1
 
@@ -188,7 +188,7 @@ Can I use a Client Credentials Grant to access a user's private contract details
 
 ---
 
-# 🛡️ Guardrails & Safety
+# Guardrails & Safety
 
 The system includes multiple safety mechanisms:
 
@@ -206,7 +206,7 @@ I'm sorry, but the provided documentation does not contain that information.
 
 ---
 
-# 🔍 Retrieval Strategy
+# Retrieval Strategy
 
 The system uses:
 - RecursiveCharacterTextSplitter
@@ -219,7 +219,7 @@ Chunk overlap is important because technical documentation and code snippets oft
 
 ---
 
-# 📚 Source Transparency
+# Source Transparency
 
 The UI displays:
 - Generated Answer
@@ -233,7 +233,7 @@ This improves:
 
 ---
 
-# ⏱️ Latency Tracking
+# Latency Tracking
 
 The application measures and displays:
 - end-to-end LLM response latency
@@ -241,7 +241,7 @@ The application measures and displays:
 
 ---
 
-# 🚀 Production-Oriented Improvements
+# Production-Oriented Improvements
 
 Implemented:
 - Modular architecture
@@ -261,17 +261,15 @@ Potential future improvements:
 
 ---
 
-# 📌 Challenges Faced
+# Challenges Faced
 
-- Handling semantic retrieval for technical documentation
 - Preventing hallucinated API responses
 - Maintaining retrieval grounding
-- Managing chunk overlap for OAuth/code snippets
 - Balancing retrieval quality and concise responses
 
 ---
 
-# 🤖 How LLMs Assisted Development
+# How LLMs Assisted Development
 
 LLMs were used for:
 - debugging assistance
@@ -284,7 +282,7 @@ No proprietary Upwork documentation was uploaded to public models.
 
 ---
 
-# 💡 Why I Am a Strong Fit for the ProAnalyst AI Team
+# Why I Am a Strong Fit for the ProAnalyst AI Team
 
 - Strong understanding of RAG systems and vector retrieval
 - Focus on production-oriented AI system design
@@ -292,7 +290,7 @@ No proprietary Upwork documentation was uploaded to public models.
 
 ---
 
-# 📄 License
+# License
 
 This project is developed for educational and assessment purposes.
 
