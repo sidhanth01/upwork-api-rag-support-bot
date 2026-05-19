@@ -1,6 +1,8 @@
 import os
 import time
 
+import streamlit as st
+
 from dotenv import load_dotenv
 from openai import OpenAI
 
@@ -9,21 +11,38 @@ from langchain_community.vectorstores import Chroma
 
 from utils.prompts import SYSTEM_PROMPT
 
-# Load environment variables
+
+# -----------------------------
+# Load Environment Variables
+# -----------------------------
 load_dotenv()
 
-# DeepInfra Client
+API_KEY = os.getenv("DEEPINFRA_API_KEY")
+
+if not API_KEY:
+    API_KEY = st.secrets["DEEPINFRA_API_KEY"]
+
+
+# -----------------------------
+# Initialize OpenAI Client
+# -----------------------------
 client = OpenAI(
-    api_key=os.getenv("DEEPINFRA_API_KEY"),
+    api_key=API_KEY,
     base_url="https://api.deepinfra.com/v1/openai"
 )
 
-# Embedding model
+
+# -----------------------------
+# Load Embedding Model
+# -----------------------------
 embedding_model = HuggingFaceEmbeddings(
     model_name="sentence-transformers/all-MiniLM-L6-v2"
 )
 
-# Load persistent ChromaDB
+
+# -----------------------------
+# Load Persistent ChromaDB
+# -----------------------------
 vectorstore = Chroma(
     persist_directory="chroma_db",
     embedding_function=embedding_model
@@ -73,7 +92,6 @@ def ask_question(user_query):
 
     # -----------------------------
     # Semantic Retrieval
-    # Using MMR for diverse chunks
     # -----------------------------
     retrieved_docs = vectorstore.max_marginal_relevance_search(
         user_query,
@@ -81,12 +99,16 @@ def ask_question(user_query):
         fetch_k=10
     )
 
-    # Combine retrieved chunks
+    # -----------------------------
+    # Combine Retrieved Context
+    # -----------------------------
     context = "\n\n---\n\n".join([
-    doc.page_content for doc in retrieved_docs
-])
+        doc.page_content for doc in retrieved_docs
+    ])
 
-    # Final grounded prompt
+    # -----------------------------
+    # Final Prompt
+    # -----------------------------
     final_prompt = f"""
 Retrieved Documentation Context:
 {context}
@@ -130,9 +152,10 @@ Provide a grounded technical answer using ONLY the retrieved documentation.
     # Extract Final Answer
     # -----------------------------
     answer = response.choices[0].message.content.strip()
-    # Hide weak sources for fallback responses
+
+    # Hide sources for fallback responses
     if "does not contain that information" in answer.lower():
-        sources = []
+        return answer, [], latency
 
     # -----------------------------
     # Extract Source Chunks
