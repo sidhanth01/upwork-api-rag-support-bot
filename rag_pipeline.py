@@ -105,10 +105,9 @@ def ask_question(user_query):
     # -----------------------------
     # Semantic Retrieval
     # -----------------------------
-    retrieved_docs = vectorstore.max_marginal_relevance_search(
+    retrieved_docs = vectorstore.similarity_search(
         user_query,
         k=3,
-        fetch_k=10
     )
 
     # -----------------------------
