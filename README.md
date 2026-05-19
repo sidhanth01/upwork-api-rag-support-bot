@@ -1,6 +1,6 @@
 # Upwork API RAG Support Bot
 
-Grounded RAG-based technical support assistant for answering Upwork API queries using LangChain, ChromaDB, Streamlit, and Llama 3.1.
+Grounded RAG-based technical support assistant for answering Upwork API queries using LangChain, FAISS, Streamlit, and Llama 3.1.
 
 ---
 
@@ -61,7 +61,7 @@ Answer + Sources + Latency
 |---|---|
 | Language | Python |
 | Framework | LangChain |
-| Vector Database | ChromaDB |
+| Vector Database | FAISS |
 | Embedding Model | sentence-transformers/all-MiniLM-L6-v2 |
 | LLM | Llama 3.1 via DeepInfra |
 | UI | Streamlit |
@@ -84,8 +84,6 @@ upwork-api-rag-support-bot/
 │
 ├── data/
 │   └── upwork_api_docs.pdf
-│
-├── chroma_db/
 │
 └── utils/
     └── prompts.py
@@ -146,7 +144,7 @@ Run the ingestion pipeline to:
 - Load the PDF
 - Chunk the documentation
 - Generate embeddings
-- Store vectors in ChromaDB
+- Store vectors in FAISS
 
 ```bash
 python ingest.py
@@ -212,7 +210,7 @@ The system uses:
 - RecursiveCharacterTextSplitter
 - Chunk size: 500
 - Chunk overlap: 50
-- Semantic retrieval with ChromaDB
+- Semantic retrieval with FAISS
 - Top-3 relevant chunk retrieval
 
 Chunk overlap is important because technical documentation and code snippets often span multiple chunk boundaries. Overlap helps preserve semantic continuity and improves retrieval quality.
