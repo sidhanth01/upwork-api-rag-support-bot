@@ -43,7 +43,7 @@ embedding_model = HuggingFaceEmbeddings(
 
 
 # -----------------------------
-# Create FAISS Vector Store
+# Load PDF & Create FAISS Store
 # -----------------------------
 loader = PyPDFLoader("data/upwork_api_docs.pdf")
 documents = loader.load()
@@ -102,44 +102,44 @@ def ask_question(user_query):
             0
         )
 
-# -----------------------------
-# Query Expansion
-# -----------------------------
-enhanced_query = user_query
+    # -----------------------------
+    # Query Expansion
+    # -----------------------------
+    enhanced_query = user_query
 
-query_lower = user_query.lower()
+    query_lower = user_query.lower()
 
-if "refresh token" in query_lower:
-    enhanced_query += " ttl expiration validity"
+    if "refresh token" in query_lower:
+        enhanced_query += " ttl expiration validity"
 
-if "access token" in query_lower:
-    enhanced_query += " ttl expiration validity"
+    if "access token" in query_lower:
+        enhanced_query += " ttl expiration validity"
 
-if "grant" in query_lower:
-    enhanced_query += " oauth supported grants authorization implicit client credentials"
+    if "grant" in query_lower:
+        enhanced_query += " oauth supported grants authorization implicit client credentials"
 
-if "tenantid" in query_lower or "x-upwork-api-tenantid" in query_lower:
-    enhanced_query += " organization header tenant"
+    if "tenantid" in query_lower or "x-upwork-api-tenantid" in query_lower:
+        enhanced_query += " organization header tenant"
 
-if "service account" in query_lower:
-    enhanced_query += " permissions scopes enterprise"
+    if "service account" in query_lower:
+        enhanced_query += " permissions scopes enterprise"
 
-if "graphql error" in query_lower:
-    enhanced_query += " validationerror message locations extensions"
+    if "graphql error" in query_lower:
+        enhanced_query += " validationerror message locations extensions"
 
-if "subscription" in query_lower:
-    enhanced_query += " entity action id webhook"
+    if "subscription" in query_lower:
+        enhanced_query += " entity action id webhook"
 
-if "job posting" in query_lower:
-    enhanced_query += " marketplaceJobPosting jobPosting permissions"
+    if "job posting" in query_lower:
+        enhanced_query += " marketplaceJobPosting jobPosting permissions"
 
-# -----------------------------
-# Semantic Retrieval
-# -----------------------------
-retrieved_docs = vectorstore.similarity_search(
-    enhanced_query,
-    k=5
-)
+    # -----------------------------
+    # Semantic Retrieval
+    # -----------------------------
+    retrieved_docs = vectorstore.similarity_search(
+        enhanced_query,
+        k=5
+    )
 
     # -----------------------------
     # Combine Retrieved Context
@@ -158,6 +158,11 @@ Retrieved Documentation Context:
 Developer Question:
 {user_query}
 
+Important:
+- Prefer explicit TTL or validity statements when answering token expiration questions.
+- Prefer direct definitions and overview sections when answering conceptual API questions.
+- Use ONLY the retrieved documentation.
+
 Provide a grounded technical answer using ONLY the retrieved documentation.
 """
 
@@ -173,7 +178,7 @@ Provide a grounded technical answer using ONLY the retrieved documentation.
         model="meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo",
         temperature=0,
         top_p=0.9,
-        max_tokens=300,
+        max_tokens=350,
         messages=[
             {
                 "role": "system",
@@ -195,7 +200,9 @@ Provide a grounded technical answer using ONLY the retrieved documentation.
     # -----------------------------
     answer = response.choices[0].message.content.strip()
 
-    # Hide sources for fallback responses
+    # -----------------------------
+    # Hide Sources for Fallback
+    # -----------------------------
     if "does not contain that information" in answer.lower():
         return answer, [], latency
 
