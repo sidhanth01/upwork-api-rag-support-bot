@@ -50,7 +50,7 @@ Answer + Sources + Latency
 -  Source transparency
 -  API latency tracking
 -  Deterministic grounded responses
--  Persistent ChromaDB vector storage
+-  Persistent FAISS vector storage
 -  Interactive Streamlit UI
 
 ---
