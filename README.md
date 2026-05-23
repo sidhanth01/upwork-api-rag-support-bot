@@ -27,7 +27,7 @@ User Query
       ↓
 Query Guardrails
       ↓
-Semantic Retrieval (ChromaDB)
+Semantic Retrieval (FAISS)
       ↓
 Top Relevant Chunks
       ↓
